@@ -6,7 +6,42 @@
 {% block body %} 
     <div class="w-80 p-4">
         <form action="/register" method="POST">
-            <input name="train" class="form-control" type="text" required>
+            <select name="train">
+                <option value="山手線">山手線</option>
+                <option value="湘南新宿ライン">湘南新宿ライン</option>
+                <option value="東海道線">東海道線</option>
+                <option value="横須賀線">横須賀線</option>
+                <option value="横浜線">横浜線</option>
+                <option value="相模線">相模線</option>
+                <option value="南武線">南武線</option>
+                <option value="中央線快速電車">中央線快速電車</option>
+                <option value="中央･総武各駅停車">中央･総武各駅停車</option>
+                <option value="総武快速線">総武快速線</option>
+                <option value="中央本線">中央本線</option>
+                <option value="総武本線">総武本線</option>
+                <option value="青梅線">青梅線</option>
+                <option value="五日市線">五日市線</option>
+                <option value="宇都宮線">宇都宮線</option>
+                <option value="高崎線">高崎線</option>
+                <option value="八高線">八高線</option>
+                <option value="日光線">日光線</option>
+                <option value="常磐線">常磐線</option>
+                <option value="常磐線快速電車">常磐線快速電車</option>
+                <option value="常磐線各駅停車">常磐線各駅停車</option>
+                <option value="内房線">内房線</option>
+                <option value="外房線">外房線</option>
+                <option value="成田線">成田線</option>
+                <option value="京葉線">京葉線</option>
+                <option value="武蔵野線">武蔵野線</option>
+                <option value="東金線">東金線</option>
+                <option value="久留里線">久留里線</option>
+                <option value="吾妻線">吾妻線</option>
+                <option value="水郡線">水郡線</option>
+                <option value="水戸線">水戸線</option>
+                <option value="両毛線">両毛線</option>
+                <option value="京浜東北線">京浜東北線</option>
+            </select>  
+            </br>
             <button class="btn btn-outline-secondary mt-3" type="submit">追加</button>
         </form>
     </br>
@@ -16,7 +51,9 @@
         </form>
         <ul class="list-group pt-4">
             {% for Train in Trainlist %}
-                <li class="list-group-item">{{ Train.TrainName }}</li>
+                <li class="list-group-item">{{ Train.TrainName }}
+                <a href="/deleteitem/{{ Train.TrainName }}">[☓]</a> 
+                </li>
             {% endfor %}    
         </ul>
     </div>

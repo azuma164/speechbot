@@ -37,6 +37,13 @@ def delete():
     db.session.commit()
     return redirect(url_for('get_trains'))
 
+@app.route("/deleteitem/<string:train_name>")
+def delete_item(train_name):
+    from trains_db import TrainTable
+    
+    db.session.query(TrainTable).filter(TrainTable.TrainName == train_name).delete()
+    db.session.commit()
+    return redirect(url_for('get_trains'))
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser(
