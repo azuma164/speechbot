@@ -3,8 +3,10 @@ import os
 import json
 import requests
 import sqlite3
+from slack_sdk import WebClient
 
 conn = sqlite3.connect("/home/pi/speechbot/voice_lab/todo.db")
+# conn = sqlite3.connect("/home/denjo/ENVIRONMENT/speechbot/voice_lab/todo.db")
 c = conn.cursor()
 c.execute("select * from train")
 list = c.fetchall()
@@ -42,7 +44,10 @@ for v in list:
 
 JSON_ADDR = 'https://tetsudo.rti-giken.jp/free/delay.json'
 
-# SLACK_WEBHOOK_URL = os.environ['SLACK_WEBHOOK_URL']
+SLACK_TOKEN = os.environ['SLACK_TOKEN']
+USER_ID = os.environ["USER_ID"]
+print(SLACK_TOKEN)
+print(USER_ID)
 
 
 def lambda_handler():
@@ -56,7 +61,7 @@ def lambda_handler():
 
     # Slack用のメッセージを作成して投げる
     (title, detail, voice_message) = get_message(notify_delays)
-    # post_slack(title, detail)
+    post_slack(title, detail)
     print(voice_message)
     return voice_message
 
@@ -108,23 +113,28 @@ def post_slack(title, detail):
     # https://api.slack.com/incoming-webhooks
     # https://api.slack.com/docs/message-formatting
     # https://api.slack.com/docs/messages/builder
-    payload = {
-        'attachments': [
-            {
-                'color': '#36a64f',
-                'pretext': title,
-                'text': detail
-            }
-        ]
-    }
+    # payload = {
+    #     'attachments': [
+    #         {
+    #             'color': '#36a64f',
+    #             'pretext': title,
+    #             'text': detail
+    #         }
+    #     ]
+    # }
 
-    # http://requests-docs-ja.readthedocs.io/en/latest/user/quickstart/
-    try:
-        response = requests.post(SLACK_WEBHOOK_URL, data=json.dumps(payload))
-    except requests.exceptions.RequestException as e:
-        print("error")
+    # # http://requests-docs-ja.readthedocs.io/en/latest/user/quickstart/
+    # try:
+    #     response = requests.post(SLACK_WEBHOOK_URL, data=json.dumps(payload))
+    # except requests.exceptions.RequestException as e:
+    #     print("error")
     # else:
     #     print(response.status_code)
+    client = WebClient(SLACK_TOKEN)
+    res = client.conversations_open(users=USER_ID)
+    dm_id = res["channel"]["id"]
+
+    client.chat_postMessage(channel=dm_id, text=detail)
 
 if __name__ == "__main__":
     lambda_handler()
