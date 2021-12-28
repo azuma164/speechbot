@@ -36,7 +36,7 @@ while True:
         # 文字列を認識したら...
         if word == 'おはよう':
             # voice_message = app.lambda_handler()
-            scp = subprocess.Popen("scp ec2-user@ip-10-20-0-158:/home/ec2-user/speechbot/voice_lab/todo.db ./voice_lab/todo.db", shell=True, stdout=subprocess.PIPE)
+            scp = subprocess.Popen("scp ec2-user@ip-10-20-0-158:/home/ec2-user/speechbot/voice_lab/todo.db /home/pi/speechbot/voice_lab/", shell=True, stdout=subprocess.PIPE)
             scp.wait()
 
             voice_message = subprocess.Popen("python3 /home/pi/speechbot/voice_lab/app.py", shell=True, stdout=subprocess.PIPE)
