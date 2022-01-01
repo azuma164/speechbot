@@ -10,6 +10,7 @@ import jtalk
 host = 'localhost'
 port = 10500
 
+subprocess.Popen("julius -C ~/julius/julius-kit/dictation-kit-v4.4/am-gmm.jconf -nostrip -gram ~/julius/dict/bot -input mic", shell=True)
 # Juliusに接続する準備
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect((host, port))
