@@ -43,7 +43,12 @@ while True:
             voice_message = subprocess.Popen("python3 /home/pi/speechbot/voice_lab/app.py", shell=True, stdout=subprocess.PIPE)
             voice_message.wait()
             word = voice_message.communicate()[0]
-            jtalk.jtalk(word.decode(u"utf-8"))
+            word = word.decode(u"utf-8")
+            # if word != "遅延情報はありません":
+            #     cmd = "mplayer siren.mp3"
+            #     p = subprocess.Popen("exec " + cmd, shell=True)
+            jtalk.jtalk(word)
+            # p.kill()
             # sleepしないと喋ってるときに中断されるからプロセスの終了を待つとかのコードを書かないといけないかも
             time.sleep(10)
 
