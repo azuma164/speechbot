@@ -46,8 +46,6 @@ JSON_ADDR = 'https://tetsudo.rti-giken.jp/free/delay.json'
 
 SLACK_TOKEN = os.environ['SLACK_TOKEN']
 USER_ID = os.environ["USER_ID"]
-print(SLACK_TOKEN)
-print(USER_ID)
 
 
 def lambda_handler():

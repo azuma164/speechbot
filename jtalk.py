@@ -16,7 +16,7 @@ def jtalk(t):
     c.stdin.close()
     c.wait()
     # 音声の読み上げ
-    aplay = ['aplay','-q','-D', 'plughw:3,0','open_jtalk.wav'] #-Dhw:{カード番号},{デバイス番号}
+    aplay = ['aplay','-q','-D', 'plughw:2,0','open_jtalk.wav'] #-Dhw:{カード番号},{デバイス番号}
     # aplay = ['aplay','-q','-D', 'plughw:3,0','futta-amorous.wav'] #-Dhw:{カード番号},{デバイス番号}
     wr = subprocess.Popen(aplay)
 
