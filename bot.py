@@ -10,8 +10,9 @@ import jtalk
 host = 'localhost'
 port = 10500
 
-subprocess.Popen("julius -C ~/julius/julius-kit/dictation-kit-v4.4/am-gmm.jconf -nostrip -gram ~/julius/dict/bot -input mic", shell=True)
+subprocess.Popen("julius -C ~/julius/julius-kit/dictation-kit-v4.4/am-gmm.jconf -nostrip -gram ~/julius/dict/bot -input mic -module", shell=True)
 # Juliusに接続する準備
+time.sleep(5)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect((host, port))
 
@@ -44,10 +45,12 @@ while True:
             voice_message.wait()
             word = voice_message.communicate()[0]
             word = word.decode(u"utf-8")
-            # if word != "遅延情報はありません":
-            #     cmd = "mplayer siren.mp3"
-            #     p = subprocess.Popen("exec " + cmd, shell=True)
-            jtalk.jtalk(word)
+            if word != "遅延情報はありません":
+                cmd = "mplayer -ao alsa:device=hw=2.0 siren.mp3"
+                p = subprocess.Popen("exec " + cmd, shell=True)
+                jtalk.jtalk(word, p)
+            else:
+                jtalk.jtalknodelay(word)
             # p.kill()
             # sleepしないと喋ってるときに中断されるからプロセスの終了を待つとかのコードを書かないといけないかも
             time.sleep(10)
